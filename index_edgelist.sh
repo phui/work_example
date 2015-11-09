@@ -7,9 +7,9 @@
 #   signed integer node id instead of string, since in that
 #   case it is likely that integer overflow will happen
 
-cat "$1" | \
-    awk '{print $1}; {print $2}' | \
+/bin/cat "$1" | \
+    /usr/bin/awk '{print $1}; {print $2}' | \
     sort -n | \
-    uniq | \
-    awk '{print NR "\t" $0}' \
+    /usr/bin/uniq | \
+    /usr/bin/awk '{print NR "\t" $0}' \
     > "$2"
