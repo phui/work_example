@@ -20,10 +20,8 @@ from __future__ import print_function
 import os
 import sys
 import re
-import gc
 import gensim
 import gzip
-import threading
 import numpy as np
 from scipy import misc
 from optparse import OptionParser
@@ -58,7 +56,7 @@ def process_target(arguments):
         return unicode(text.replace('\xc2\x85', '<newline>'), encoding, errors=errors)
     gensim.utils.to_unicode = any2unicode
 
-    # read word2vec model as a global variable, accessible to all threads
+    # read word2vec model
     model = word2vec.load_word2vec_format('glove.twitter.27B.100d.txt',
             binary=False)
 
