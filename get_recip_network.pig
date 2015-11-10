@@ -17,4 +17,4 @@ result = FOREACH intersect GENERATE FLATTEN(group) AS (IDONE:long, IDTWO:long);
 result = ORDER result BY IDONE, IDTWO;
 
 --- write to HDFS
-STORE data into '$output_dir' USING PigStorage('\t', '-schema');
+STORE result into '$output_dir' USING PigStorage('\t', '-schema');
