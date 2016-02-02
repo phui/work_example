@@ -1,18 +1,21 @@
-# author : Pik-Mai Hui (huip@indiana.edu)
-# This script is run on 16-core Linux with 40GB RAM, niced with -n 9
-# This script produces 10 workers. Be ware of memory consumption since each worker
-#   requires a standalone copy of word2vec model in memory
-# This script is heavily CPU-bound
-# This script relays on optimized numpy and scipy installations to support Gensim
+'''
+Author : Pik-Mai Hui (huip@indiana.edu)
 
-# This script takes lines in the format
-#       uid \t set([tokens...]) \n
-#   in the files in the input directory and calculate average word similarity
-#   among pairs of tokens in the set, deserialize by eval()
+This script is run on 16-core Linux with 40GB RAM, niced with -n 9
+This script produces 10 workers. Be ware of memory consumption since each worker
+  requires a standalone copy of word2vec model in memory
+This script is heavily CPU-bound
+This script relays on optimized numpy and scipy installations to support Gensim
 
-# Usage: python tokens_set_similarity.py -d input_dir
-#   required: - input files in input_dir are assumed to be gzipped
-#             - no other file is allowed to be in input_dir except input gzips
+This script takes lines in the format
+      uid \t set([tokens...]) \n
+  in the files in the input directory and calculate average word similarity
+  among pairs of tokens in the set, deserialize by eval()
+
+Usage: python word2vec_sim.py -d input_dir
+  required: - input files in input_dir are assumed to be gzipped
+            - no other file is allowed to be in input_dir except input gzips
+'''
 
 from __future__ import print_function
 
@@ -56,7 +59,7 @@ def process_target(arguments):
         return unicode(text.replace('\xc2\x85', '<newline>'), encoding, errors=errors)
     gensim.utils.to_unicode = any2unicode
 
-    # read word2vec model
+    # read word2vec model, assuming the model data exists
     model = word2vec.load_word2vec_format('glove.twitter.27B.100d.txt',
             binary=False)
 

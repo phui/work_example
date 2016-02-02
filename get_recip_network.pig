@@ -1,4 +1,4 @@
-data = LOAD '$input_dir' USING PigStorage('\t') AS (toID:long, fromID:long, cnt:long);
+data = LOAD '$in' USING PigStorage('\t') AS (toID:long, fromID:long, cnt:long);
 
 --- filter out looping edges
 data = FILTER data BY toID != fromID;
@@ -17,4 +17,4 @@ result = FOREACH intersect GENERATE FLATTEN(group) AS (IDONE:long, IDTWO:long);
 result = ORDER result BY IDONE, IDTWO;
 
 --- write to HDFS
-STORE result into '$output_dir' USING PigStorage('\t', '-schema');
+STORE result into '$out' USING PigStorage('\t', '-schema');
